@@ -1,0 +1,48 @@
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px 32px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.kicker {
+  margin: 0 0 4px;
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #67717c;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.75rem;
+  color: #1f252a;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}
+
+.link {
+  color: #1f252a;
+  font-weight: 600;
+}
+
+.link:hover,
+.link:focus-visible {
+  color: #0f5ea5;
+}
+
+.navHint {
+  font-size: 0.9rem;
+  color: #75808a;
+}
+
+.error {
+  font-size: 0.9rem;
+  color: #b42318;
+}

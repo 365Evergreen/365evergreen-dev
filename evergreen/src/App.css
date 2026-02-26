@@ -1,0 +1,12 @@
+.app {
+  min-height: 100vh;
+  display: block;
+  padding: 0;
+}
+
+.app__content {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #ffffff;
+  padding: 0 32px 48px;
+}

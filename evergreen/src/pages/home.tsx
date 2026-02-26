@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { getPageBySlug } from '@/services/cms'
+import { BlogGrid, ContactForm } from '@/components'
 import styles from './home.module.css'
 
 interface HomePageState {
@@ -85,6 +86,10 @@ export function HomePage() {
           dangerouslySetInnerHTML={{ __html: page.content }}
         />
       )}
+      <BlogGrid />
+      <div className={styles.contactSection}>
+        <ContactForm />
+      </div>
     </section>
   )
 }

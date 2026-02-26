@@ -1,2 +1,5 @@
 export { Footer } from './Footer'
 export { Header } from './Header'
+export { Hero } from './Hero'
+export { BlogGrid } from './BlogGrid'
+export { ContactForm } from './ContactForm'

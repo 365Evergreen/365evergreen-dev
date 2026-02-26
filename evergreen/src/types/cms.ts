@@ -22,3 +22,20 @@ export interface WpMenuItem {
   label: string
   uri: string
 }
+
+export interface WpFeaturedImage {
+  id: string
+  link: string
+  sourceUrl: string
+}
+
+export interface WpPost {
+  id: string
+  title: string
+  uri: string
+  slug: string
+  excerpt: string
+  featuredImage?: {
+    node: WpFeaturedImage
+  } | null
+}

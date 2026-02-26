@@ -9,6 +9,10 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@apollo/client": "^3.14.0",
+    "@faustwp/cli": "^3.3.6",
+    "@faustwp/core": "^3.3.6",
+    "graphql": "^16.13.0",
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3"

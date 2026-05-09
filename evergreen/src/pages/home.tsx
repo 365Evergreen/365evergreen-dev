@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { getPageBySlug } from '@/services/cms'
-import { BlogGrid, ContactForm } from '@/components'
+import { BlogGrid, ContactForm, Hero } from '@/components'
 import styles from './home.module.css'
 
 interface HomePageState {
@@ -77,9 +77,12 @@ export function HomePage() {
 
   return (
     <section className={styles.home}>
-      <header className={styles.header}>
-        <h1 className={styles.title}>{page.title}</h1>
-      </header>
+      <Hero
+        title={page.title ?? '365 Evergreen'}
+        subtitle="Modern, WordPress-managed content delivered through a polished headless frontend designed to feel fast, credible, and easy to use on every screen."
+        ctaLabel="Get in touch"
+        ctaHref="#contact"
+      />
       {page.content && (
         <div
           className={styles.content}
@@ -87,7 +90,7 @@ export function HomePage() {
         />
       )}
       <BlogGrid />
-      <div className={styles.contactSection}>
+      <div id="contact" className={styles.contactSection}>
         <ContactForm />
       </div>
     </section>

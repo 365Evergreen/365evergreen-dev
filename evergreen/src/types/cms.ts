@@ -43,5 +43,4 @@ export interface WpPost {
 export interface WpHomepageData {
   page: WpPage | null
   menuItems: WpMenuItem[]
-  posts: WpPost[]
 }

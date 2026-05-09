@@ -4,7 +4,7 @@
 Displays the most recent blog posts from WordPress in a responsive grid layout.
 
 ## Props
-None. The component automatically fetches and displays up to 9 posts.
+None. The component lazy-loads and displays up to 9 posts when it approaches the viewport.
 
 ## Usage
 ```tsx
@@ -22,6 +22,7 @@ export function HomePage() {
 
 ## Features
 - Fetches latest 9 posts from WordPress via GraphQL
+- Defers fetching until the section nears the viewport
 - Responsive grid: stacked on mobile, 2 columns on tablet, 3 columns on desktop
 - Displays featured image, title, excerpt, and read more link
 - Loading and error states

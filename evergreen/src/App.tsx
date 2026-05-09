@@ -63,7 +63,6 @@ export function App() {
         >
           <HomePage
             page={homepageData?.page ?? null}
-            posts={homepageData?.posts ?? []}
             isLoading={isLoading}
             error={error}
           />

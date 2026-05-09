@@ -1,4 +1,4 @@
-import type { WpHomepageData, WpMenuItem, WpPage, WpPost } from '@/types/cms'
+import type { WpHomepageData, WpMenuItem, WpPage } from '@/types/cms'
 import { requestGraphQL } from './graphql'
 
 const DEFAULT_API_BASE = '/api'
@@ -16,15 +16,10 @@ interface HomepageQueryResponse {
       }>
     }
   } | null
-  posts: {
-    edges: Array<{
-      node: WpPost
-    }>
-  }
 }
 
 const HOMEPAGE_QUERY = `
-  query HomepageData($slug: ID!, $menuId: ID!, $postCount: Int!) {
+  query HomepageData($slug: ID!, $menuId: ID!) {
     page(id: $slug, idType: URI) {
       id
       slug
@@ -43,24 +38,6 @@ const HOMEPAGE_QUERY = `
         }
       }
     }
-    posts(first: $postCount) {
-      edges {
-        node {
-          id
-          title
-          uri
-          slug
-          excerpt(format: RENDERED)
-          featuredImage {
-            node {
-              id
-              link
-              sourceUrl
-            }
-          }
-        }
-      }
-    }
   }
 `
 
@@ -72,20 +49,17 @@ function mapHomepageData(data: HomepageQueryResponse): WpHomepageData {
   return {
     page: data.page,
     menuItems: data.menu?.menuItems.edges.map((edge) => edge.node) ?? [],
-    posts: data.posts.edges.map((edge) => edge.node),
   }
 }
 
 async function getHomepageDataFromApi(
   slug: string,
   menuId: string,
-  postCount: number,
   options: HomepageRequestOptions,
 ): Promise<WpHomepageData> {
   const params = new URLSearchParams({
     slug,
     menuId,
-    postCount: String(postCount),
   })
 
   const response = await fetch(`${getApiBase()}/homepage?${params.toString()}`, {
@@ -120,12 +94,11 @@ async function getHomepageDataFromWordPress(
   slug: string,
   menuId: string,
   cacheSeconds: number,
-  postCount: number,
   options: HomepageRequestOptions,
 ): Promise<WpHomepageData> {
   const data = await requestGraphQL<HomepageQueryResponse>(
     HOMEPAGE_QUERY,
-    { slug, menuId, postCount },
+    { slug, menuId },
     { cacheSeconds, signal: options.signal },
   )
 
@@ -136,11 +109,10 @@ export async function getHomepageData(
   slug: string,
   menuId: string,
   cacheSeconds = 0,
-  postCount = 9,
   options: HomepageRequestOptions = {},
 ): Promise<WpHomepageData> {
   try {
-    return await getHomepageDataFromApi(slug, menuId, postCount, options)
+    return await getHomepageDataFromApi(slug, menuId, options)
   } catch (error) {
     if (!import.meta.env.DEV && !shouldFallbackToWordPress(error)) {
       throw error
@@ -151,7 +123,6 @@ export async function getHomepageData(
     slug,
     menuId,
     cacheSeconds,
-    postCount,
     options,
   )
 }

@@ -6,6 +6,10 @@
   padding: 2rem 0;
 }
 
+.placeholder {
+  min-height: 1px;
+}
+
 /* Card */
 .card {
   display: flex;

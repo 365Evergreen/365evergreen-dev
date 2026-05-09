@@ -1,30 +1,108 @@
+import { useEffect, useRef, useState } from 'react'
+import { getLatestPosts } from '@/services/cms'
 import type { WpPost } from '@/types/cms'
 import styles from './styles.module.css'
 
-interface BlogGridProps {
-  posts: WpPost[]
-  isLoading?: boolean
-}
+export function BlogGrid() {
+  const sectionRef = useRef<HTMLDivElement | null>(null)
+  const [shouldLoad, setShouldLoad] = useState(false)
+  const [posts, setPosts] = useState<WpPost[]>([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-export function BlogGrid({ posts, isLoading = false }: BlogGridProps) {
+  useEffect(() => {
+    const section = sectionRef.current
+
+    if (!section || shouldLoad) {
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldLoad(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '250px 0px' },
+    )
+
+    observer.observe(section)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [shouldLoad])
+
+  useEffect(() => {
+    let isActive = true
+
+    if (!shouldLoad) {
+      return
+    }
+
+    const loadPosts = async () => {
+      try {
+        setIsLoading(true)
+        setError(null)
+        const latestPosts = await getLatestPosts(300)
+
+        if (!isActive) {
+          return
+        }
+
+        setPosts(latestPosts.slice(0, 9))
+      } catch (err) {
+        if (!isActive) {
+          return
+        }
+
+        const message = err instanceof Error ? err.message : 'Unknown error'
+        setError(message)
+      } finally {
+        if (isActive) {
+          setIsLoading(false)
+        }
+      }
+    }
+
+    loadPosts()
+
+    return () => {
+      isActive = false
+    }
+  }, [shouldLoad])
+
+  if (!shouldLoad) {
+    return <div ref={sectionRef} className={styles.placeholder} aria-hidden="true" />
+  }
+
   if (isLoading) {
     return (
-      <div className={styles.loading}>
+      <div ref={sectionRef} className={styles.loading}>
         <p>Loading posts...</p>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div ref={sectionRef} className={styles.error}>
+        <p>Unable to load blog posts.</p>
       </div>
     )
   }
 
   if (posts.length === 0) {
     return (
-      <div className={styles.empty}>
+      <div ref={sectionRef} className={styles.empty}>
         <p>No posts available</p>
       </div>
     )
   }
 
   return (
-    <div className={styles.grid}>
+    <div ref={sectionRef} className={styles.grid}>
       {posts.map((post) => (
         <article key={post.id} className={styles.card}>
           {post.featuredImage?.node && (

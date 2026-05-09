@@ -3,7 +3,7 @@ const DEFAULT_CACHE_SECONDS = 300
 const cacheStore = new Map()
 
 const HOMEPAGE_QUERY = `
-  query HomepageData($slug: ID!, $menuId: ID!, $postCount: Int!) {
+  query HomepageData($slug: ID!, $menuId: ID!) {
     page(id: $slug, idType: URI) {
       id
       slug
@@ -22,24 +22,6 @@ const HOMEPAGE_QUERY = `
         }
       }
     }
-    posts(first: $postCount) {
-      edges {
-        node {
-          id
-          title
-          uri
-          slug
-          excerpt(format: RENDERED)
-          featuredImage {
-            node {
-              id
-              link
-              sourceUrl
-            }
-          }
-        }
-      }
-    }
   }
 `
 
@@ -51,11 +33,11 @@ function getGraphQLEndpoint() {
   )
 }
 
-function getCacheKey(slug, menuId, postCount) {
-  return JSON.stringify({ slug, menuId, postCount })
+function getCacheKey(slug, menuId) {
+  return JSON.stringify({ slug, menuId })
 }
 
-async function requestHomepageData(slug, menuId, postCount) {
+async function requestHomepageData(slug, menuId) {
   const response = await globalThis.fetch(getGraphQLEndpoint(), {
     method: 'POST',
     headers: {
@@ -63,7 +45,7 @@ async function requestHomepageData(slug, menuId, postCount) {
     },
     body: JSON.stringify({
       query: HOMEPAGE_QUERY,
-      variables: { slug, menuId, postCount },
+      variables: { slug, menuId },
     }),
   })
 
@@ -86,19 +68,18 @@ async function requestHomepageData(slug, menuId, postCount) {
     page: payload.data.page,
     menuItems:
       payload.data.menu?.menuItems?.edges.map((edge) => edge.node) ?? [],
-    posts: payload.data.posts?.edges.map((edge) => edge.node) ?? [],
   }
 }
 
-async function getCachedHomepageData(slug, menuId, postCount) {
-  const key = getCacheKey(slug, menuId, postCount)
+async function getCachedHomepageData(slug, menuId) {
+  const key = getCacheKey(slug, menuId)
   const cached = cacheStore.get(key)
 
   if (cached && cached.expiresAt > Date.now()) {
     return cached.value
   }
 
-  const homepageData = await requestHomepageData(slug, menuId, postCount)
+  const homepageData = await requestHomepageData(slug, menuId)
   cacheStore.set(key, {
     expiresAt: Date.now() + DEFAULT_CACHE_SECONDS * 1000,
     value: homepageData,
@@ -110,7 +91,6 @@ async function getCachedHomepageData(slug, menuId, postCount) {
 module.exports = async function homepage(context, req) {
   const slug = req.query.slug || 'home'
   const menuId = req.query.menuId
-  const postCount = Number.parseInt(req.query.postCount || '9', 10)
 
   if (!menuId) {
     context.res = {
@@ -123,19 +103,8 @@ module.exports = async function homepage(context, req) {
     return
   }
 
-  if (!Number.isInteger(postCount) || postCount < 1) {
-    context.res = {
-      status: 400,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ error: 'postCount must be a positive integer' }),
-    }
-    return
-  }
-
   try {
-    const homepageData = await getCachedHomepageData(slug, menuId, postCount)
+    const homepageData = await getCachedHomepageData(slug, menuId)
     context.res = {
       status: 200,
       headers: {

@@ -104,6 +104,8 @@ swa start http://localhost:5173 --api-location ./api
 
 This simulates the full Azure environment locally, including routing and functions.
 
+If you run only `pnpm dev`, the frontend will fall back to direct WordPress GraphQL requests in local development. The SWA API caching path is active when running through the SWA emulator or in Azure Static Web Apps.
+
 ---
 
 ## 🚀 Build & Deployment

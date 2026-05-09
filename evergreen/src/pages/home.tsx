@@ -1,5 +1,5 @@
-import { BlogGrid, ContactForm, FeatureGrid, Hero } from '@/components'
-import type { WpPage } from '@/types/cms'
+import { BlogGrid, ContactForm, FeatureGrid, Hero } from '../components'
+import type { WpPage } from '../types/cms'
 import styles from './home.module.css'
 
 interface HomePageProps {
@@ -36,7 +36,7 @@ export function HomePage({
     <section className={styles.home}>
       <Hero
         className={styles.heroFullBleed}
-        title={page.title ?? '365 Evergreen'}
+        title={page?.title ?? '365 Evergreen'}
         subtitle="Modern, WordPress-managed content delivered through a polished headless frontend designed to feel fast, credible, and easy to use on every screen."
         ctaLabel="Get in touch"
         ctaHref="#contact"

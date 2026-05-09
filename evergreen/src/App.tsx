@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import type { WpHomepageData } from '@/types/cms'
-import { getHomepageData } from '@/services/cms'
+import type { WpHomepageData } from './types/cms'
+import { getHomepageData } from './services/cms'
 import './App.css'
 import { Footer, Header } from './components'
 import { AppLayout } from './layouts/AppLayout'

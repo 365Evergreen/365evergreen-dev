@@ -1,55 +1,12 @@
-import { useEffect, useState } from 'react'
-import { getLatestPosts } from '@/services/cms'
 import type { WpPost } from '@/types/cms'
 import styles from './styles.module.css'
 
-export function BlogGrid() {
-  const [posts, setPosts] = useState<WpPost[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+interface BlogGridProps {
+  posts: WpPost[]
+  isLoading?: boolean
+}
 
-  useEffect(() => {
-    let isActive = true
-
-    const loadPosts = async () => {
-      try {
-        setIsLoading(true)
-        const data = await getLatestPosts(300)
-
-        if (!isActive) {
-          return
-        }
-
-        setPosts(data.slice(0, 9))
-      } catch (err) {
-        if (!isActive) {
-          return
-        }
-
-        const message = err instanceof Error ? err.message : 'Unknown error'
-        setError(message)
-      } finally {
-        if (isActive) {
-          setIsLoading(false)
-        }
-      }
-    }
-
-    loadPosts()
-
-    return () => {
-      isActive = false
-    }
-  }, [])
-
-  if (error) {
-    return (
-      <div className={styles.error}>
-        <p>Unable to load blog posts</p>
-      </div>
-    )
-  }
-
+export function BlogGrid({ posts, isLoading = false }: BlogGridProps) {
   if (isLoading) {
     return (
       <div className={styles.loading}>

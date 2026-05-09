@@ -1,59 +1,20 @@
-import { useEffect, useState } from 'react'
-import { getPageBySlug } from '@/services/cms'
 import { BlogGrid, ContactForm, Hero } from '@/components'
+import type { WpPage, WpPost } from '@/types/cms'
 import styles from './home.module.css'
 
-interface HomePageState {
-  title?: string
-  content?: string | null
+interface HomePageProps {
+  page: WpPage | null
+  posts: WpPost[]
+  isLoading?: boolean
+  error?: string | null
 }
 
-export function HomePage() {
-  const [page, setPage] = useState<HomePageState | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    let isActive = true
-
-    const loadPage = async () => {
-      try {
-        setIsLoading(true)
-        const data = await getPageBySlug('home', 60)
-
-        if (!isActive) {
-          return
-        }
-
-        setPage(
-          data
-            ? {
-                title: data.title,
-                content: data.content,
-              }
-            : null,
-        )
-      } catch (err) {
-        if (!isActive) {
-          return
-        }
-
-        const message = err instanceof Error ? err.message : 'Unknown error'
-        setError(message)
-      } finally {
-        if (isActive) {
-          setIsLoading(false)
-        }
-      }
-    }
-
-    loadPage()
-
-    return () => {
-      isActive = false
-    }
-  }, [])
-
+export function HomePage({
+  page,
+  posts,
+  isLoading = false,
+  error = null,
+}: HomePageProps) {
   if (isLoading) {
     return <p className={styles.status}>Loading homepage content...</p>
   }
@@ -89,7 +50,7 @@ export function HomePage() {
           dangerouslySetInnerHTML={{ __html: page.content }}
         />
       )}
-      <BlogGrid />
+      <BlogGrid posts={posts} />
       <div id="contact" className={styles.contactSection}>
         <ContactForm />
       </div>

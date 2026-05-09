@@ -39,3 +39,9 @@ export interface WpPost {
     node: WpFeaturedImage
   } | null
 }
+
+export interface WpHomepageData {
+  page: WpPage | null
+  menuItems: WpMenuItem[]
+  posts: WpPost[]
+}

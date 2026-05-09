@@ -1,41 +1,14 @@
-import { useEffect, useState } from 'react'
-import { getMenuItemsById } from '@/services/cms'
+import { useState } from 'react'
 import type { WpMenuItem } from '@/types/cms'
 import styles from './styles.module.css'
 
-const MENU_ID = 'dGVybTo0'
+interface HeaderProps {
+  items?: WpMenuItem[]
+  isLoading?: boolean
+}
 
-export function Header() {
-  const [items, setItems] = useState<WpMenuItem[]>([])
-  const [error, setError] = useState<string | null>(null)
+export function Header({ items = [], isLoading = false }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false)
-
-  useEffect(() => {
-    let isActive = true
-
-    const loadMenu = async () => {
-      try {
-        const menuItems = await getMenuItemsById(MENU_ID, 300)
-
-        if (isActive) {
-          setItems(menuItems)
-        }
-      } catch (err) {
-        if (!isActive) {
-          return
-        }
-
-        const message = err instanceof Error ? err.message : 'Unknown error'
-        setError(message)
-      }
-    }
-
-    loadMenu()
-
-    return () => {
-      isActive = false
-    }
-  }, [])
 
   return (
     <div className={styles.header}>
@@ -73,7 +46,7 @@ export function Header() {
         className={`${styles.nav} ${isOpen ? styles.navOpen : ''}`}
         aria-label="Primary"
       >
-        {items.length === 0 && !error ? (
+        {isLoading && items.length === 0 ? (
           <span className={styles.navHint}>Loading menu...</span>
         ) : null}
         {items.map((item) => (
@@ -86,7 +59,6 @@ export function Header() {
             {item.label}
           </a>
         ))}
-        {error ? <span className={styles.error}>Menu unavailable</span> : null}
       </nav>
     </div>
   )

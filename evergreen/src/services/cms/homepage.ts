@@ -105,6 +105,17 @@ async function getHomepageDataFromApi(
   return (await response.json()) as WpHomepageData
 }
 
+function shouldFallbackToWordPress(error: unknown) {
+  if (!(error instanceof Error)) {
+    return false
+  }
+
+  return (
+    error.message === 'Homepage API returned a non-JSON response' ||
+    error.message.startsWith('Homepage request failed:')
+  )
+}
+
 async function getHomepageDataFromWordPress(
   slug: string,
   menuId: string,
@@ -131,7 +142,7 @@ export async function getHomepageData(
   try {
     return await getHomepageDataFromApi(slug, menuId, postCount, options)
   } catch (error) {
-    if (!import.meta.env.DEV) {
+    if (!import.meta.env.DEV && !shouldFallbackToWordPress(error)) {
       throw error
     }
   }

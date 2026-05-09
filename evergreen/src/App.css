@@ -7,6 +7,6 @@
 .app__content {
   width: 100%;
   min-height: 100vh;
-  background-color: #ffffff;
+  background-color: var(--color-surface);
   padding: 0 32px 48px;
 }

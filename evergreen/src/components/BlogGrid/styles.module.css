@@ -10,15 +10,16 @@
 .card {
   display: flex;
   flex-direction: column;
-  background: #ffffff;
+  background: var(--color-surface);
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-soft);
   transition: box-shadow 0.2s ease;
 }
 
 .card:hover {
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 18px 36px rgba(11, 11, 11, 0.12);
 }
 
 /* Image */
@@ -27,7 +28,7 @@
   width: 100%;
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  background: #f5f5f5;
+  background: var(--color-neutral-lighter);
 }
 
 .image {
@@ -57,20 +58,20 @@
 }
 
 .titleLink {
-  color: #1a1a1a;
+  color: var(--color-text-primary);
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .titleLink:hover {
-  color: #0366d6;
+  color: var(--color-accent);
 }
 
 .excerpt {
   margin: 0 0 1rem;
   font-size: 0.9375rem;
   line-height: 1.6;
-  color: #555555;
+  color: var(--color-text-muted);
   flex: 1;
 }
 
@@ -81,7 +82,7 @@
 .readMore {
   display: inline-flex;
   align-items: center;
-  color: #0366d6;
+  color: var(--color-accent);
   text-decoration: none;
   font-size: 0.9375rem;
   font-weight: 500;
@@ -89,7 +90,7 @@
 }
 
 .readMore:hover {
-  color: #024ea4;
+  color: var(--color-accent-hover);
   text-decoration: underline;
 }
 
@@ -102,13 +103,13 @@
 }
 
 .loading p {
-  color: #666666;
+  color: var(--color-text-muted);
   font-size: 1rem;
 }
 
 .error p,
 .empty p {
-  color: #999999;
+  color: var(--color-text-muted);
   font-size: 1rem;
   margin: 0;
 }

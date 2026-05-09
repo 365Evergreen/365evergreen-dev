@@ -23,7 +23,6 @@ export function Header({ items = [], isLoading = false }: HeaderProps) {
         />
         <div className={styles.brandText}>
           <p className={styles.kicker}>365 Evergreen</p>
-          <h1 className={styles.title}>Headless CMS</h1>
         </div>
       </div>
       <button

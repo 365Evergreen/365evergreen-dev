@@ -1,5 +1,6 @@
 export { Footer } from './Footer'
 export { Header } from './Header'
 export { Hero } from './Hero'
+export { FeatureGrid } from './FeatureGrid'
 export { BlogGrid } from './BlogGrid'
 export { ContactForm } from './ContactForm'

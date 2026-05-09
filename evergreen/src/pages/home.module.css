@@ -3,8 +3,12 @@
   gap: 24px;
 }
 
+.heroFullBleed {
+  width: 100%;
+}
+
 .content {
-  color: #2f363d;
+  color: var(--color-text-secondary);
   line-height: 1.7;
 }
 
@@ -15,19 +19,28 @@
 .contactSection {
   margin-top: 1rem;
   padding-top: 2rem;
-  border-top: 1px solid #e2e6e8;
+  border-top: 1px solid var(--color-border);
 }
 
 .status {
   margin: 0;
   padding: 16px 20px;
-  background-color: #ffffff;
+  background-color: var(--color-surface);
   border-radius: 12px;
-  box-shadow: 0 6px 16px rgba(20, 20, 20, 0.08);
+  box-shadow: var(--shadow-soft);
 }
 
 .error {
-  color: #b42318;
+  color: #8a1f1f;
   margin: 8px 0 0;
   word-break: break-word;
+}
+
+@media (min-width: 721px) {
+  .heroFullBleed {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    border-radius: 0;
+  }
 }

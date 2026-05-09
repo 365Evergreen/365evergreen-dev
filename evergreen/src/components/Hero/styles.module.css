@@ -3,10 +3,29 @@
   overflow: hidden;
   border-radius: 24px;
   padding: 48px 40px;
-  background: linear-gradient(135deg, #f6f6f2 0%, #eef3f7 60%, #f9f1e6 100%);
-  border: 1px solid #e0e6ea;
+  background-color: var(--color-surface-subtle);
+  background-position: center right;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 1px solid var(--color-border);
   display: grid;
   gap: 24px;
+  min-height: 420px;
+  align-items: center;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+      90deg,
+      rgba(250, 249, 248, 0.94) 0%,
+      rgba(250, 249, 248, 0.88) 28%,
+      rgba(244, 250, 244, 0.72) 52%,
+      rgba(244, 250, 244, 0.26) 100%
+  );
+  pointer-events: none;
 }
 
 .content {
@@ -22,29 +41,29 @@
   font-size: 0.8rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: #5f6b76;
+  color: var(--color-theme-dark);
 }
 
 .title {
   margin: 0;
   font-size: 2.4rem;
   letter-spacing: -0.02em;
-  color: #1d242b;
+  color: var(--color-text-primary);
 }
 
 .subtitle {
   margin: 0;
   font-size: 1.05rem;
   line-height: 1.6;
-  color: #3a434b;
+  color: var(--color-text-secondary);
 }
 
 .cta {
   justify-self: start;
   padding: 12px 20px;
   border-radius: 999px;
-  background-color: #0f5ea5;
-  color: #ffffff;
+  background-color: var(--color-accent);
+  color: var(--color-white);
   font-weight: 600;
   text-decoration: none;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -53,21 +72,32 @@
 .cta:hover,
 .cta:focus-visible {
   transform: translateY(-1px);
-  box-shadow: 0 10px 20px rgba(15, 94, 165, 0.25);
+  box-shadow: 0 10px 20px rgba(46, 125, 50, 0.24);
 }
 
 .accent {
   position: absolute;
-  inset: auto -20% -30% auto;
-  width: 360px;
-  height: 360px;
-  background: radial-gradient(circle, rgba(15, 94, 165, 0.25), transparent 70%);
+  inset: auto -12% -18% auto;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(46, 125, 50, 0.2), transparent 72%);
   pointer-events: none;
 }
 
 @media (max-width: 720px) {
   .hero {
     padding: 36px 24px;
+    min-height: 360px;
+    background-position: 68% center;
+  }
+
+  .hero::before {
+    background: linear-gradient(
+      180deg,
+      rgba(250, 249, 248, 0.9) 0%,
+      rgba(244, 250, 244, 0.84) 45%,
+      rgba(244, 250, 244, 0.68) 100%
+    );
   }
 
   .title {

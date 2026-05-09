@@ -13,8 +13,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #ffffff;
-  border-bottom: 1px solid #e2e6e8;
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
   padding: 20px 32px;
   box-sizing: border-box;
   z-index: 10;
@@ -27,8 +27,8 @@
 }
 
 .footer {
-  border-top: 1px solid #e2e6e8;
+  border-top: 1px solid var(--color-border);
   padding-top: 16px;
-  color: #66707a;
+  color: var(--color-text-muted);
   font-size: 0.95rem;
 }

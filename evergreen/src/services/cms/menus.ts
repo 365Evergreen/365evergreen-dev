@@ -1,4 +1,4 @@
-import type { WpMenuItem } from '@/types/cms'
+import type { WpMenuItem } from '../../types/cms'
 import { requestGraphQL } from './graphql'
 
 interface MenuItemsByIdResponse {
@@ -40,5 +40,7 @@ export async function getMenuItemsById(menuId: string, cacheSeconds = 0) {
     return []
   }
 
-  return data.menu.menuItems.edges.map((edge) => edge.node)
+  return data.menu.menuItems.edges.map(
+    (edge: { node: WpMenuItem }) => edge.node,
+  )
 }

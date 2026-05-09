@@ -1,4 +1,4 @@
-import type { WpPage } from '@/types/cms'
+import type { WpPage } from '../../types/cms'
 import { requestGraphQL } from './graphql'
 
 interface PageBySlugResponse {

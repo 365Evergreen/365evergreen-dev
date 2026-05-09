@@ -1,4 +1,4 @@
-import type { WpHomepageData, WpMenuItem, WpPage } from '@/types/cms'
+import type { WpHomepageData, WpMenuItem, WpPage } from '../../types/cms'
 import { requestGraphQL } from './graphql'
 
 const DEFAULT_API_BASE = '/api'

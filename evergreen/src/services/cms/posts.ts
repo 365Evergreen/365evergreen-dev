@@ -1,5 +1,5 @@
 import { requestGraphQL } from './graphql'
-import type { WpPost } from '@/types/cms'
+import type { WpPost } from '../../types/cms'
 
 interface PostsQueryResponse {
   posts: {
@@ -41,5 +41,5 @@ export async function getLatestPosts(
     { cacheSeconds },
   )
 
-  return response.posts.edges.map((edge) => edge.node)
+  return response.posts.edges.map((edge: { node: WpPost }) => edge.node)
 }

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { WpMenuItem } from '@/types/cms'
+import type { WpMenuItem } from '../../types/cms'
 import styles from './styles.module.css'
 
 interface HeaderProps {

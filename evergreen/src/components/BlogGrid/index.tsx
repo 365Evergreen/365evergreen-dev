@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import { getLatestPosts } from '@/services/cms'
-import type { WpPost } from '@/types/cms'
+import { getLatestPosts } from '../../services/cms'
+import type { WpPost } from '../../types/cms'
 import styles from './styles.module.css'
 
 export function BlogGrid() {

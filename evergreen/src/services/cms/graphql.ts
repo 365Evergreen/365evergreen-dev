@@ -1,4 +1,4 @@
-import type { GraphQLResponse } from '@/types/cms'
+import type { GraphQLResponse } from '../../types/cms'
 
 const DEFAULT_ENDPOINT = 'https://365evergreendev.com/graphql'
 const cacheStore = new Map<string, { expiresAt: number; value: unknown }>()

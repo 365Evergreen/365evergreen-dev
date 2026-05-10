@@ -48,14 +48,14 @@
 
 .title {
   margin: 0;
-  font-size: 2.4rem;
+  font-size: 3rem; font-weight: 500;
   letter-spacing: -0.02em;
   color: var(--color-text-primary);
 }
 
 .subtitle {
   margin: 0;
-  font-size: 1.05rem;
+  font-size: 1.75rem;
   line-height: 1.6;
   color: var(--color-text-secondary);
 }

@@ -36,7 +36,6 @@
   gap: 12px;
   width: min(calc(100% - (var(--page-gutter) * 2)), 1200px);
   margin: 0 auto;
-  max-width: 560px;
 }
 
 .eyebrow {

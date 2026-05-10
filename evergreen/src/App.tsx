@@ -1,27 +1,21 @@
 import { useEffect, useState } from 'react'
 import type {
-  WpHomepageData,
-  WpMenuItem,
   WpPage,
   WpPost,
   WpResource,
 } from './types/cms'
 import {
-  getHomepageData,
   getLatestPosts,
   getLatestResources,
-  getMenuItemsById,
   getPageBySlug,
 } from './services/cms'
+import { primaryNavigation } from './content/site'
 import './App.css'
 import { Footer, Header } from './components'
 import { AppLayout } from './layouts/AppLayout'
 import { ArchivePage } from './pages/archive-page'
 import { ContentPage } from './pages/content-page'
 import { HomePage } from './pages/home'
-
-const HOMEPAGE_SLUG = 'home'
-const PRIMARY_MENU_ID = 'dGVybTo0'
 
 type AppRoute =
   | { kind: 'home' }
@@ -53,8 +47,6 @@ function getRoute(pathname: string): AppRoute {
 }
 
 export function App() {
-  const [homepageData, setHomepageData] = useState<WpHomepageData | null>(null)
-  const [menuItems, setMenuItems] = useState<WpMenuItem[]>([])
   const [page, setPage] = useState<WpPage | null>(null)
   const [posts, setPosts] = useState<WpPost[]>([])
   const [resources, setResources] = useState<WpResource[]>([])
@@ -68,55 +60,40 @@ export function App() {
     const loadRoute = async () => {
       try {
         setIsLoading(true)
-        setHomepageData(null)
         setPage(null)
         setPosts([])
         setResources([])
 
         if (currentRoute.kind === 'home') {
-          const data = await getHomepageData(HOMEPAGE_SLUG, PRIMARY_MENU_ID, 60)
-
           if (!isActive) {
             return
           }
-
-          setHomepageData(data)
-          setMenuItems(data.menuItems)
+          setError(null)
+          setIsLoading(false)
+          return
         } else if (currentRoute.kind === 'posts-archive') {
-          const [loadedMenuItems, loadedPosts] = await Promise.all([
-            getMenuItemsById(PRIMARY_MENU_ID, 300),
-            getLatestPosts(300),
-          ])
+          const loadedPosts = await getLatestPosts(300)
 
           if (!isActive) {
             return
           }
 
-          setMenuItems(loadedMenuItems)
           setPosts(loadedPosts)
         } else if (currentRoute.kind === 'resources-archive') {
-          const [loadedMenuItems, loadedResources] = await Promise.all([
-            getMenuItemsById(PRIMARY_MENU_ID, 300),
-            getLatestResources(300),
-          ])
+          const loadedResources = await getLatestResources(300)
 
           if (!isActive) {
             return
           }
 
-          setMenuItems(loadedMenuItems)
           setResources(loadedResources)
         } else {
-          const [loadedMenuItems, loadedPage] = await Promise.all([
-            getMenuItemsById(PRIMARY_MENU_ID, 300),
-            getPageBySlug(currentRoute.slug, 60),
-          ])
+          const loadedPage = await getPageBySlug(currentRoute.slug, 60)
 
           if (!isActive) {
             return
           }
 
-          setMenuItems(loadedMenuItems)
           setPage(loadedPage)
         }
 
@@ -145,13 +122,7 @@ export function App() {
   let pageContent
 
   if (currentRoute.kind === 'home') {
-    pageContent = (
-      <HomePage
-        page={homepageData?.page ?? null}
-        isLoading={isLoading}
-        error={error}
-      />
-    )
+    pageContent = <HomePage />
   } else if (currentRoute.kind === 'posts-archive') {
     pageContent = (
       <ArchivePage
@@ -182,12 +153,7 @@ export function App() {
     <main className="app">
       <section className="app__content">
         <AppLayout
-          header={
-            <Header
-              items={currentRoute.kind === 'home' ? homepageData?.menuItems : menuItems}
-              isLoading={isLoading}
-            />
-          }
+          header={<Header items={primaryNavigation} />}
           footer={<Footer />}
         >
           {pageContent}

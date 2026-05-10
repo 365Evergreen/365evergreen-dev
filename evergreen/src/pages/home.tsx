@@ -5,14 +5,7 @@ import {
   HelpSuccessSection,
   Hero,
 } from '../components'
-import type { WpPage } from '../types/cms'
 import styles from './home.module.css'
-
-interface HomePageProps {
-  page: WpPage | null
-  isLoading?: boolean
-  error?: string | null
-}
 
 const homepageFeatures = [
   {
@@ -33,11 +26,7 @@ const homepageFeatures = [
   },
 ]
 
-export function HomePage({
-  page,
-  isLoading = false,
-  error = null,
-}: HomePageProps) {
+export function HomePage() {
   return (
     <section className={styles.home}>
       <Hero
@@ -55,19 +44,6 @@ export function HomePage({
         title="How we help you succeed"
         text="Behind every transformative Power Apps implementation stands an engineering team with both technological mastery and strategic business acumen. 365 Evergreen delivers this rare combination to Brisbane enterprises seeking competitive differentiation through precision-engineered digital solutions"
       />
-      {page?.content ? (
-        <div
-          className={styles.content}
-          dangerouslySetInnerHTML={{ __html: page.content }}
-        />
-      ) : isLoading ? (
-        <p className={styles.status}>Loading homepage content...</p>
-      ) : error ? (
-        <div className={styles.status}>
-          <p>We could not load the latest homepage content.</p>
-          <p className={styles.error}>{error}</p>
-        </div>
-      ) : null}
       <BlogGrid />
       <div id="contact" className={styles.contactSection}>
         <ContactForm />

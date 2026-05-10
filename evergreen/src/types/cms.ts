@@ -29,7 +29,7 @@ export interface WpFeaturedImage {
   sourceUrl: string
 }
 
-export interface WpPost {
+export interface WpContentSummary {
   id: string
   title: string
   uri: string
@@ -39,6 +39,10 @@ export interface WpPost {
     node: WpFeaturedImage
   } | null
 }
+
+export interface WpPost extends WpContentSummary {}
+
+export interface WpResource extends WpContentSummary {}
 
 export interface WpHomepageData {
   page: WpPage | null

@@ -9,21 +9,35 @@
   top: 0;
   left: 0;
   right: 0;
+  min-height: var(--header-height);
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: var(--color-surface);
-  border-bottom: 1px solid var(--color-border);
-  padding: 20px 32px;
+  background-color: transparent;
+  border-bottom: 1px solid transparent;
+  padding: 20px var(--page-gutter);
   box-sizing: border-box;
-  z-index: 10;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+  z-index: 1000;
+}
+
+.headerScrolled {
+  background-color: rgba(255, 255, 255, 0.96);
+  border-bottom-color: var(--color-border);
+  box-shadow: 0 10px 24px rgba(11, 11, 11, 0.08);
 }
 
 .main {
   display: grid;
   gap: 24px;
-  padding-top: 96px;
+  padding-top: var(--header-height);
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .footer {

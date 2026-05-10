@@ -1,4 +1,6 @@
 :root {
+  --header-height: 96px;
+  --page-gutter: clamp(20px, 4vw, 64px);
   --color-theme-primary: #2e7d32;
   --color-theme-lighter-alt: #f4faf4;
   --color-theme-lighter: #d3ead4;

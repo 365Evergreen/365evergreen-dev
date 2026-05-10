@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { getLatestPosts } from '../../services/cms'
 import type { WpPost } from '../../types/cms'
+import { ContentCardGrid } from '../ContentCardGrid'
 import styles from './styles.module.css'
 
 export function BlogGrid() {
@@ -79,62 +80,35 @@ export function BlogGrid() {
 
   if (isLoading) {
     return (
-      <div ref={sectionRef} className={styles.loading}>
-        <p>Loading posts...</p>
+      <div ref={sectionRef}>
+        <ContentCardGrid items={[]} isLoading emptyMessage="No posts available" />
       </div>
     )
   }
 
   if (error) {
     return (
-      <div ref={sectionRef} className={styles.error}>
-        <p>Unable to load blog posts.</p>
+      <div ref={sectionRef}>
+        <ContentCardGrid
+          items={[]}
+          error="Unable to load blog posts."
+          emptyMessage="No posts available"
+        />
       </div>
     )
   }
 
   if (posts.length === 0) {
     return (
-      <div ref={sectionRef} className={styles.empty}>
-        <p>No posts available</p>
+      <div ref={sectionRef}>
+        <ContentCardGrid items={[]} emptyMessage="No posts available" />
       </div>
     )
   }
 
   return (
-    <div ref={sectionRef} className={styles.grid}>
-      {posts.map((post) => (
-        <article key={post.id} className={styles.card}>
-          {post.featuredImage?.node && (
-            <a
-              href={post.uri}
-              className={styles.imageLink}
-              aria-label={post.title}
-            >
-              <img
-                src={post.featuredImage.node.sourceUrl}
-                alt=""
-                className={styles.image}
-                loading="lazy"
-              />
-            </a>
-          )}
-          <div className={styles.content}>
-            <h2 className={styles.title}>
-              <a href={post.uri} className={styles.titleLink}>
-                {post.title}
-              </a>
-            </h2>
-            <div
-              className={styles.excerpt}
-              dangerouslySetInnerHTML={{ __html: post.excerpt }}
-            />
-            <a href={post.uri} className={styles.readMore}>
-              Read more
-            </a>
-          </div>
-        </article>
-      ))}
+    <div ref={sectionRef}>
+      <ContentCardGrid items={posts} />
     </div>
   )
 }

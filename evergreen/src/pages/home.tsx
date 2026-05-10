@@ -1,4 +1,10 @@
-import { BlogGrid, ContactForm, FeatureGrid, Hero } from '../components'
+import {
+  BlogGrid,
+  ContactForm,
+  FeatureGrid,
+  HelpSuccessSection,
+  Hero,
+} from '../components'
 import type { WpPage } from '../types/cms'
 import styles from './home.module.css'
 
@@ -18,7 +24,7 @@ const homepageFeatures = [
   {
     title: 'Automate the busywork',
     description:
-      ' Custom apps, workflows, and dashboards that replace the spreadsheets, email chains, and manual handoffs slowing your team down. ',  bullets: ['Power Apps', 'Power Automate', 'Power BI', 'Dataverse'],
+      ' Custom apps, workflows, and dashboards that replace the spreadsheets, email chains, and manual handoffs slowing your team down. ', bullets: ['Power Apps', 'Power Automate', 'Power BI', 'Dataverse'],
   },
   {
     title: 'AI your team will actually use',
@@ -36,14 +42,18 @@ export function HomePage({
     <section className={styles.home}>
       <Hero
         className={styles.heroFullBleed}
-        title={page?.title ?? '365 Evergreen'}
-        subtitle="Modern, WordPress-managed content delivered through a polished headless frontend designed to feel fast, credible, and easy to use on every screen."
+        title="Microsoft specialists in Brisbane"
+        subtitle="Helping Brisbane businesses leverage Microsoft 365 for maximum impact."
         ctaLabel="Get in touch"
         ctaHref="#contact"
       />
       <FeatureGrid
         items={homepageFeatures}
-        intro="A compact feature band directly beneath the hero helps visitors understand the value proposition before they scroll into longer content."
+        intro="We are dedicated to providing exceptional software development services, creating custom software solutions that surpass our clients' expectations. Our team utilizes cutting-edge technologies and follows industry-leading standards to guarantee the dependability, security, and user-friendliness of our products."
+      />
+      <HelpSuccessSection
+        title="How we help you succeed"
+        text="Behind every transformative Power Apps implementation stands an engineering team with both technological mastery and strategic business acumen. 365 Evergreen delivers this rare combination to Brisbane enterprises seeking competitive differentiation through precision-engineered digital solutions"
       />
       {page?.content ? (
         <div

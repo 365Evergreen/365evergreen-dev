@@ -1,0 +1,52 @@
+.page {
+  display: grid;
+  gap: 24px;
+}
+
+.header {
+  display: grid;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--color-text-primary);
+}
+
+.content {
+  max-width: 78ch;
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+}
+
+.content :global(h2),
+.content :global(h3) {
+  color: var(--color-text-primary);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.content :global(p),
+.content :global(ul),
+.content :global(ol) {
+  margin: 0 0 1rem;
+}
+
+.status {
+  margin: 0;
+  padding: 16px 20px;
+  background-color: var(--color-surface);
+  border-radius: 12px;
+  box-shadow: var(--shadow-soft);
+}
+
+.error {
+  color: #8a1f1f;
+  margin: 8px 0 0;
+  word-break: break-word;
+}

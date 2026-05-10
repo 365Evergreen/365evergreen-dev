@@ -1,5 +1,6 @@
 export { getPageBySlug } from './pages'
 export { getMenuItemsById } from './menus'
 export { getLatestPosts } from './posts'
+export { getLatestResources } from './resources'
 export { getHomepageData } from './homepage'
 export { requestGraphQL } from './graphql'

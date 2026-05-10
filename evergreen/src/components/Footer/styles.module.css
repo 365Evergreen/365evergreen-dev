@@ -1,4 +1,6 @@
 .footer {
+  background-color: var(--color-background-secondary);
+  padding: 16px clamp(20px, 4vw, 64px);
   display: flex;
   flex-wrap: wrap;
   gap: 12px 24px;

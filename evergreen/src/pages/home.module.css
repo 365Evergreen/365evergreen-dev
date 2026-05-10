@@ -5,6 +5,8 @@
 
 .heroFullBleed {
   width: 100%;
+  margin-top: calc(var(--header-height) * -1);
+  padding-top: calc(var(--header-height) + 48px);
 }
 
 .content {
@@ -42,5 +44,11 @@
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
     border-radius: 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .heroFullBleed {
+    padding-top: calc(var(--header-height) + 36px);
   }
 }
